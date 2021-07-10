@@ -19,7 +19,7 @@ const questions = [
         choiceB: 'programming',
         choiceC: 'styling',
         imgSrc: './IMAGES/html.png',
-        correct: 'A'
+        correct: 'markup'
     },
 
     {
@@ -28,7 +28,7 @@ const questions = [
         choiceB: 'programming',
         choiceC: 'styling',
         imgSrc: './IMAGES/css.png',
-        correct: 'C'
+        correct: 'styling'
     },
 
     {
@@ -37,7 +37,7 @@ const questions = [
         choiceB: 'node.js',
         choiceC: 'java',
         imgSrc: './IMAGES/js.png',
-        correct: 'A'
+        correct: 'react.js'
     }
 
 ];
@@ -46,6 +46,8 @@ const questionTime = 10; // 10 seconds.
 let questionIndex = 0;
 let TIMER;
 const numberOfQuestions = questions.length;
+
+
 
 // question rander function.
 function questionsRander() {
@@ -67,8 +69,60 @@ TIMER = setInterval( renderProgress, 1000 );
 let count = 0;
 renderProgress();
 
-const score = document.getElementById('score-container');
-score.textContent = '100%';
+const scoreWrapper = document.getElementById('score-container');
+const score = document.getElementById('score');
+
+const NOTE = document.getElementById('note');
+const progress = document.querySelectorAll('.progress-cicle');
+let progressIndx = 0;
+
+const choices = document.querySelectorAll('.choice'); 
+const choicesArr = Array.from(choices);
+choicesArr.forEach( choice => {
+     
+     choice.addEventListener( 'click', () => {
+        // check if ans is correct.
+        if( choice.textContent === questions[questionIndex].correct ) {
+
+             answerIsCorrect();
+
+             if( questionIndex === numberOfQuestions - 1 ) {
+                 clearInterval(TIMER);
+                 quiz.style.opacity = .4;
+                 checkAnswer();
+             }
+
+             if( questionIndex < numberOfQuestions - 1 ) {
+                 questionIndex++;
+                 questionsRander();
+                 count = 0;
+                 progressIndx++;
+             }
+        }
+
+        else {
+            answerIsWrong();
+            
+            if( questionIndex === numberOfQuestions - 1 ) {
+                clearInterval(TIMER);
+                quiz.style.opacity = .4;
+                checkAnswer();
+            }
+
+            if( questionIndex < numberOfQuestions - 1 ) {
+                questionIndex++;
+                questionsRander();
+                count = 0;
+                progressIndx++;
+            }
+
+            
+        }
+     });
+
+});
+
+
 
 // render progress function.
 function renderProgress() {
@@ -84,9 +138,15 @@ function renderProgress() {
     if( count === 10 && questionIndex === numberOfQuestions - 1 ) {
         clearInterval(TIMER);
         quiz.style.opacity = .4;
-        score.classList.add('active');
+        checkAnswer();
     }
     
+    // progress.
+    if( count === questionTime ) {
+        answerIsWrong();
+        progressIndx++;
+    }
+   
     count++;
     
     if( count > questionTime && questionIndex <= 1 ) {
@@ -95,10 +155,45 @@ function renderProgress() {
         // render another question.
         questionIndex++;
         questionsRander();
+
     }
     
 
 }
 
 
+function answerIsCorrect() {
+    progress[progressIndx].style.backgroundColor = 'green';
+    progress[progressIndx].classList.add('correct');
+}
 
+function answerIsWrong() {
+    progress[progressIndx].style.backgroundColor = 'red';
+    progress[progressIndx].classList.add('wrong');
+}
+
+
+function checkAnswer() {
+
+    // wrong and correct.
+    const wrong = document.querySelectorAll('.wrong');
+    const wrongLen = wrong.length;
+    const correct = document.querySelectorAll('.correct');
+    const correctLen = correct.length;
+    const exellent = document.getElementById('exellent');
+
+    scoreWrapper.classList.add('active');         
+    
+    let marks = Number( (correctLen / numberOfQuestions) * 100 );
+
+    marks = marks.toFixed(1);
+
+    if( correctLen === 3 ) {
+        
+        exellent.textContent = 'exellent!';
+
+    }
+
+    score.innerText = marks + "%";
+
+}
