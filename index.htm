@@ -10,38 +10,54 @@
 <body>
     <div id="start">start</div>
 
-    <div class="quiz">
+    <div class="container">
 
-       <div class="quiz__left">
+      <div class="quiz">
 
-          <div id="imageWrapper"> <img src="#" id="qImg" alt="qn-image"></div>
-             
-          <div id="timer">
-            <div id="counter">00</div>
-            <div class="timeGauge-wrapper">
-                <div id="timeGauge"></div>
-            </div>
-          </div>
-
-       </div>
-       
-       <div class="quiz__right">
-
-           <div id="question"></div>
-           <div id="choices">
-             <div class="choice" id="A"></div>
-             <div class="choice" id="B"></div>
-             <div class="choice" id="C"></div>
+        <div class="quiz__left">
+ 
+           <div id="imageWrapper"> <img src="#" id="qImg" alt="qn-image"></div>
+              
+           <div id="timer">
+             <div id="counter">00</div>
+             <div class="timeGauge-wrapper">
+                 <div id="timeGauge"></div>
+             </div>
            </div>
+ 
+        </div>
         
-        <div id="progress"></div>
+        <div class="quiz__right">
+ 
+            <div id="question"></div>
+            <div id="choices">
+              <div class="choice" id="A"></div>
+              <div class="choice" id="B"></div>
+              <div class="choice" id="C"></div>
+            </div>
+         
+         <div id="progress">
+           <div class="progress-cicle"></div>
+           <div class="progress-cicle"></div>
+           <div class="progress-cicle"></div>
+         </div>
+ 
+         
+     </div>
+     
+     
+    </div>
+    
+    <div id="score-container">
+      <p id="score"></p>
+      <p id="exellent"></p>
+    </div>
+    
+  </div>
 
-        
-    </div>
-    
-      <div id="score-container"></div>
-    
-    </div>
+    <!-- audio -->
+    <audio id="note" src="./AUDIO/notes-A.mp3"></audio>
+
     <script src="main.js"></script>
 </body>
 </html>
